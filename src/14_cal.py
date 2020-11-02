@@ -27,6 +27,53 @@ print out a calendar for April in 2015, but if you omit either the year or both 
 it should use today’s date to get the month and year.
 """
 
+    
 import sys
 import calendar
 from datetime import datetime
+now = datetime.now()
+print(sys.argv)
+
+def get_year(year):
+  try:
+    year = int(year)
+    return year
+  except ValueError:
+    return 'Please enter a valid year!'
+  
+def get_month(mon):
+  switcher = {
+    "january": 1,
+    "february": 2,
+    "march": 3,
+    "april": 4,
+    "may": 5,
+    "june": 6,
+    "july": 7,
+    "august": 8,
+    "september": 9,
+    "october": 10,
+    "november": 11,
+    "december": 12,
+  }
+  return switcher.get(mon.lower(), "Invalid Argument")
+
+if len(sys.argv) == 1:
+  print(calendar.month(now.year, now.month))
+elif len(sys.argv) == 2:
+  month = get_month(sys.argv[1])
+  if month == "Invalid Argument":
+    print('Please provide the month as the full string (ie. January, February) or as an integer (1, 2)')
+  else:
+    print(calendar.month(now.year, month))
+elif len(sys.argv) == 3:
+  month = get_month(sys.argv[1])
+  year = get_year(sys.argv[2])
+  if month == "Invalid Argument":
+    print('Please provide the month as the full string (ie. January, February) or as an integer (1, 2)')
+  elif year == 'Please enter a valid year!':
+    print('Please enter year as a valid integer!')
+  else:
+    print(calendar.month(year, month))
+else:
+  print('Please run file correctly- "python3 14_cal.py [month] [year]"')
